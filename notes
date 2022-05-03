@@ -1,0 +1,43 @@
+Jumping process
+
+vars (
+  keyUp: false,
+  isJumping: false,
+  isAnimatingJumping: false,
+  lockAction: false,
+  gravity = 1
+)
+
+
+
+User press an up button(if keyUp === true)
+  isJumipng = true;
+  isAnimatingJumping = true;
+  lockAction = true
+  gravity = 0
+  keyUp = false;
+
+Player still in the air, but animation ended
+ gravity = 1;
+ isAnimatingJumping = false; 
+ if isJumping == false
+  lockAction = false
+
+Player landed on the platform
+ isJumping = false;
+ if isAnimatingJumping == false
+  lockAction = false
+
+
+{
+  up: {
+    can: boolean;
+    y: null | number;
+  },
+  down: {
+    can: boolean;
+    y: null | number;
+  }
+}
+
+  
