@@ -1,5 +1,5 @@
 import Utils from '../general/Utils';
-import { actionsQueuePresets } from '../properties_presets/robotPresets';
+import { actionsQueuePresets } from '../presets/robotPresets';
 import { ActionsQueue } from './Robot';
 
 export enum RobotSpecialBehaviour {

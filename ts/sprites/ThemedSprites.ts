@@ -1,6 +1,5 @@
 import Sprite from './Sprite';
 import Vector from '../general/Vector';
-import State from '../general/State';
 
 export type Pixel = [number, number, number];
 
@@ -14,12 +13,18 @@ class ThemedSprites {
   theme: PixelChange[];
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
+  plainSpritesSheet: HTMLImageElement;
 
   constructor(theme: PixelChange[], plainSpritesSheet: HTMLImageElement) {
+    this.plainSpritesSheet = plainSpritesSheet;
     this.theme = theme;
     this.canvas = this.recolorImage(plainSpritesSheet);
     const canvas = document.querySelector('#root') as HTMLCanvasElement;
     this.context = canvas.getContext('2d');
+  }
+
+  reloadTheme() {
+    this.canvas = this.recolorImage(this.plainSpritesSheet);
   }
 
   recolorImage(img: HTMLImageElement): HTMLCanvasElement {
@@ -61,8 +66,6 @@ class ThemedSprites {
   }
 
   renderSprite(sprite: Sprite, position: Vector) {
-    // const context = State.canvas.ctx;
-    // console.log(context);
     this.context.drawImage(
       this.canvas,
       sprite.position.x,

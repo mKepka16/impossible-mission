@@ -21,6 +21,7 @@ class Controls {
   action: Action = 'standRight';
   actionBlock: boolean = false;
   absoluteBlock: boolean = false;
+  elevatorBlock: boolean = false;
 
   constructor() {
     window.addEventListener('keydown', (e) => this.handleKeyDown(e));
@@ -40,6 +41,7 @@ class Controls {
     this.action = 'standRight';
     this.actionBlock = false;
     this.absoluteBlock = false;
+    this.elevatorBlock = false;
   }
 
   setAction(newAction: Action) {
@@ -50,10 +52,12 @@ class Controls {
   handleKeyDown(e: KeyboardEvent) {
     if (this.absoluteBlock) return;
     if (e.key == 'd' || e.key == 'ArrowRight') {
+      if (this.elevatorBlock) return;
       if (!this.actionBlock) this.setAction('runRight');
       this.right = true;
     }
     if (e.key == 'a' || e.key == 'ArrowLeft') {
+      if (this.elevatorBlock) return;
       if (!this.actionBlock) this.setAction('runLeft');
       this.left = true;
     }
@@ -64,6 +68,7 @@ class Controls {
       this.down = true;
     }
     if (!this.actionBlock && e.key == ' ') {
+      if (this.elevatorBlock) return;
       if (this.action === 'runLeft' || this.action === 'standLeft') {
         this.setAction('jumpLeft');
         this.jumpLeft = true;

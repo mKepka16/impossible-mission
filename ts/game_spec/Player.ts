@@ -154,7 +154,7 @@ class Player extends Rectangle implements IRenderable {
   }
 
   update(dt: number, g: number, f: number) {
-    const runningSpeed = 1;
+    const runningSpeed = 1.5;
     if (Controls.left && !Controls.actionBlock) this.vx -= runningSpeed;
     if (Controls.right && !Controls.actionBlock) this.vx += runningSpeed;
 
@@ -325,6 +325,10 @@ class Player extends Rectangle implements IRenderable {
     this.isAnimatingJump = false;
     this.setLeft(State.currentLevel.playerStartingPosition.x);
     this.setTop(State.currentLevel.playerStartingPosition.y);
+    this.ol = this.l;
+    this.or = this.r;
+    this.ot = this.t;
+    this.ob = this.b;
     this.lastAction = 'standRight';
     this.lastFrameY = undefined;
     this.vx = 0;
