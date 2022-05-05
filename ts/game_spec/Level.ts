@@ -31,7 +31,6 @@ class Level extends View implements IRenderable {
 
   leaveRoomToThe(dir: 'left' | 'right') {
     const column = Rooms.findRoomColumn(this.id);
-    console.log('room: ', this.id, 'column is ', column);
     const place = Rooms.roomsPositions[this.id];
     let elevator: ElevatorCorridor;
     let stop: number = (place - 1) * 2;

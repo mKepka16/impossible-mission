@@ -5,6 +5,7 @@ import ElevatorTheme from '../game_spec/MainElevatorView/ElevatorTheme';
 class ElevatorCorridorSprites extends ThemedSprites {
   static SPRITES = {
     pocketComputer: new Sprite(new Vector(0, 200), new Vector(320, 80)),
+    minimapBorder: new Sprite(new Vector(0, 280), new Vector(164, 59)),
     leftCeiling: new Sprite(new Vector(164, 280), new Vector(136, 8)),
     rightCeiling: new Sprite(new Vector(164, 296), new Vector(136, 8)),
     leftFloor: new Sprite(new Vector(164, 288), new Vector(136, 8)),
