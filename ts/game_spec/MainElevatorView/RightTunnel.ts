@@ -3,16 +3,9 @@ import Assets from '../../general/Assets';
 import State from '../../general/State';
 import Vector from '../../general/Vector';
 import ElevatorCorridorSprites from '../../sprites/ElevatorCorridorSprites';
+import Tunnel from './Tunnel';
 
-class RightTunnel implements IRenderableOnCamera {
-  y: number;
-  color: string;
-
-  constructor(y: number, color: string) {
-    this.y = y;
-    this.color = color;
-  }
-
+class RightTunnel extends Tunnel implements IRenderableOnCamera {
   update() {}
 
   render(dt: number, cameraY: number) {

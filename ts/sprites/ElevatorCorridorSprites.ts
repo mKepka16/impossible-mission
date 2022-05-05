@@ -1,6 +1,7 @@
 import ThemedSprites, { PixelChange } from './ThemedSprites';
 import Sprite from './Sprite';
 import Vector from '../general/Vector';
+import ElevatorTheme from '../game_spec/MainElevatorView/ElevatorTheme';
 class ElevatorCorridorSprites extends ThemedSprites {
   static SPRITES = {
     pocketComputer: new Sprite(new Vector(0, 200), new Vector(320, 80)),
@@ -11,6 +12,8 @@ class ElevatorCorridorSprites extends ThemedSprites {
     whiteFloorLeft: new Sprite(new Vector(164, 312), new Vector(136, 8)),
     whiteFloorRight: new Sprite(new Vector(164, 320), new Vector(136, 8)),
     elevator: new Sprite(new Vector(708, 16), new Vector(48, 96)),
+    elevatorLeftWall: new Sprite(new Vector(708, 16), new Vector(6, 96)),
+    elevatorRightWall: new Sprite(new Vector(750, 16), new Vector(6, 96)),
     wall: new Sprite(new Vector(756, 16), new Vector(8, 24)),
     background: new Sprite(new Vector(320, 0), new Vector(128, 200)),
     elevatorTop: new Sprite(new Vector(708, 0), new Vector(64, 8)),
@@ -62,6 +65,12 @@ class ElevatorCorridorSprites extends ThemedSprites {
       },
     ];
     super(theme, plainSpritesSheet);
+  }
+
+  setNewTheme(theme: ElevatorTheme) {
+    this.theme[2].new = theme.border;
+    this.theme[8].new = theme.fill;
+    this.reloadTheme();
   }
 }
 

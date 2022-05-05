@@ -1,97 +1,85 @@
 import Elevator from './Elevator';
-import { ElevatorSpot } from './ElevatorSpot';
 import { IRenderable } from '../collisions/IRenderable';
-import Platform from './Platform';
 import Player from './Player';
 import { Rectangle } from '../collisions/Rectangle';
 import State from '../general/State';
+import View from './View';
+import { levelsEntries } from '../presets/levels_presets';
 import Vector from '../general/Vector';
-import Wall from './Wall';
-import { Robot } from './Robot';
-import RobotSprites from '../sprites/RobotSprites';
-import Searchable from './Searchable';
+import Rooms from './Rooms';
+import ElevatorCorridor from './MainElevatorView/ElevatorCorridor';
+import Controls from './Controls';
 
-class Level implements IRenderable {
+const SPAWN_POSITIONS = {
+  leftTop: new Vector(54, 50),
+  leftBottom: new Vector(54, 470),
+  rightTop: new Vector(882, 50),
+  rightBottom: new Vector(882, 470),
+};
+
+class Level extends View implements IRenderable {
+  id: number;
   objects: IRenderable[];
-  static DEFAULT_GRAVITY = 2;
-  playerStartingPosition: Vector = new Vector(10, 0);
+  static DEFAULT_GRAVITY = 1;
 
-  constructor() {
-    this.objects = [
-      new Wall(0, 0, 1, 'right'),
-      new Wall(0, 7, 18, 'right'),
-      new Wall(39, 0, 19, 'left'),
-      // Floor
-      new Platform(1, 24, 1.5),
-      new Elevator(4, 24, 1),
-      new Platform(7, 24, 1.5),
-      new ElevatorSpot(10, 24, 2),
-      new Platform(13, 24, 1.5),
-      new Elevator(16, 24, 3),
-      new Platform(19, 24, 1.5),
-      new Elevator(22, 24, 4),
-      new Platform(25, 24, 2),
-      new Elevator(29, 24, 5),
-      new Platform(32, 24, 4.5),
-
-      // 1
-      new Platform(1, 18, 1.5),
-      new Elevator(4, 18, 1),
-      new Platform(7, 18, 1.5),
-      new Elevator(10, 18, 2),
-      new Platform(13, 18, 1.5),
-      new Elevator(16, 18, 3),
-      new Platform(19, 18, 1.5),
-      new Elevator(22, 18, 4),
-      new Platform(25, 18, 2),
-      new Elevator(29, 18, 5),
-      new Platform(32, 18, 3.5),
-
-      // 2
-      new Platform(1, 12, 1.5),
-      new ElevatorSpot(4, 12, 1),
-      new Platform(7, 12, 1.5),
-      new Elevator(10, 12, 2),
-      new Platform(13, 12, 1.5),
-      new ElevatorSpot(16, 12, 3),
-      new Platform(19, 12, 1.5),
-      new ElevatorSpot(22, 12, 4),
-      new Platform(25, 12, 2),
-      new ElevatorSpot(29, 12, 5),
-      new Platform(32, 12, 3.5),
-
-      //3
-      new Platform(0, 6, 2),
-      new ElevatorSpot(4, 6, 1),
-      new Platform(7, 6, 1.5),
-      new ElevatorSpot(10, 6, 2),
-      new Platform(13, 6, 1.5),
-      new ElevatorSpot(16, 6, 3),
-      new Platform(19, 6, 1.5),
-      new ElevatorSpot(22, 6, 4),
-      new Platform(25, 6, 2),
-      new ElevatorSpot(29, 6, 5),
-      new Platform(32, 6, 3.5),
-
-      // robots
-      new Robot({
-        y: 438 - RobotSprites.SPRITES.left[0].getRealDimensions().y,
-        fromX: 24 * 13,
-        toX: 24 * 16,
-      }),
-      new Robot({
-        y: 150 + 24 * 6 - RobotSprites.SPRITES.left[0].getRealDimensions().y,
-        fromX: 24 * 19,
-        toX: 24 * 22,
-      }),
-
-      new Searchable('controlPanel', 13.5, 6),
-      new Searchable('bath', 33, 6),
-    ];
+  constructor(id: number, objects: IRenderable[]) {
+    super();
+    this.id = id;
+    this.objects = objects;
     Elevator.assignGroups(this.objects);
   }
 
+  leaveRoomToThe(dir: 'left' | 'right') {
+    const column = Rooms.findRoomColumn(this.id);
+    console.log('room: ', this.id, 'column is ', column);
+    const place = Rooms.roomsPositions[this.id];
+    let elevator: ElevatorCorridor;
+    let stop: number = (place - 1) * 2;
+    Player.resetPlayer();
+
+    if (dir === 'left') {
+      elevator = State.elevators[column - 1];
+      levelsEntries[this.id].left === 'bottom' && stop++;
+      Controls.action = 'standLeft';
+    } else {
+      elevator = State.elevators[column];
+      levelsEntries[this.id].right === 'bottom' && stop++;
+      Controls.action = 'standRight';
+    }
+
+    State.currentElevator = elevator;
+    State.currentElevator.mainElevator.moveToStop(stop);
+    State.currentElevator.movePlayerTo(dir === 'left' ? 'right' : 'left');
+    // To do:
+    //  Move player to the right position on the new elevator view
+    State.scene = 'Elevator';
+  }
+
+  movePlayerToSpawnPoint() {
+    Player.setTop(this.playerStartingPosition.y);
+    Player.setLeft(this.playerStartingPosition.x);
+  }
+
+  setLeftSpawnPoint() {
+    if (levelsEntries[this.id].left === 'top') {
+      this.playerStartingPosition = SPAWN_POSITIONS.leftTop;
+    } else {
+      this.playerStartingPosition = SPAWN_POSITIONS.leftBottom;
+    }
+  }
+
+  setRightSpawnPoint() {
+    if (levelsEntries[this.id].right === 'top') {
+      this.playerStartingPosition = SPAWN_POSITIONS.rightTop;
+    } else {
+      this.playerStartingPosition = SPAWN_POSITIONS.rightBottom;
+    }
+  }
+
   public update() {
+    if (Player.r < 0) this.leaveRoomToThe('left');
+    else if (Player.l > 960) this.leaveRoomToThe('right');
+
     const dt = State.canvas.deltaTime;
     Player.update(dt, State.gravity, State.friction);
 
@@ -108,10 +96,17 @@ class Level implements IRenderable {
 
   public render() {
     const dt = State.canvas.deltaTime;
+    this.renderBackground();
     this.objects.forEach((p) => {
       p.render(dt);
     });
     Player.render(dt);
+  }
+
+  renderBackground() {
+    State.canvas.ctx.beginPath();
+    State.canvas.ctx.fillStyle = levelsEntries[this.id].color;
+    State.canvas.ctx.fillRect(0, 0, State.canvas.width, State.canvas.height);
   }
 }
 

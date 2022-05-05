@@ -4,7 +4,7 @@ import Assets from '../general/Assets';
 import State from '../general/State';
 import Utils from '../general/Utils';
 import Vector from '../general/Vector';
-import { RobotActionTypes } from '../properties_presets/robotPresets';
+import { RobotActionTypes } from '../presets/robotPresets';
 import RobotSprites from '../sprites/RobotSprites';
 import Sprite from '../sprites/Sprite';
 import { IAnimated } from './IAnimated';
