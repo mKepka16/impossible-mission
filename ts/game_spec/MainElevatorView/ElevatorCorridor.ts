@@ -127,17 +127,6 @@ class ElevatorCorridor extends View implements IRenderable {
         );
     });
     this.movePlayerTo('center');
-    console.log('corridor ', this.id);
-    this.stopsInfo.forEach((stopInfo) =>
-      console.log(
-        'height: ',
-        stopInfo.height,
-        ' left: ',
-        stopInfo.left?.roomId,
-        ' right: ',
-        stopInfo.right?.roomId
-      )
-    );
   }
 
   movePlayerTo(place: 'left' | 'center' | 'right') {
@@ -164,13 +153,14 @@ class ElevatorCorridor extends View implements IRenderable {
     this.mainElevator.renderWalls();
     this.renderElevatorTopAndBottom();
 
-    PocketComputer.render();
+    PocketComputer.render(dt);
   }
 
   update() {
     this.camera.y = this.mainElevator.y;
-
     const dt = State.canvas.deltaTime;
+    PocketComputer.update(dt);
+
     this.tunnels.forEach((tunnel) => {
       tunnel.update(dt, 0, 0, this.camera.y);
     });

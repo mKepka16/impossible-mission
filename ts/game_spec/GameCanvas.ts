@@ -12,7 +12,6 @@ class GameCanvas extends Canvas {
     State.levels = getLevels();
     State.elevators = getElevators();
     State.currentElevator = State.elevators[1];
-    State.currentLevel = State.levels[0];
     State.scene = 'Elevator';
   }
 

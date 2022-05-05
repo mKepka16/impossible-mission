@@ -6,6 +6,7 @@ import ElevatorCorridorSprites from '../../sprites/ElevatorCorridorSprites';
 import { Rectangle } from '../../collisions/Rectangle';
 import { NoCollisionBox } from '../../collisions/NoCollisionBox';
 import Controls from '../Controls';
+import Rooms from '../Rooms';
 
 class MainElevator implements IRenderable {
   y: number = 0;
@@ -38,6 +39,14 @@ class MainElevator implements IRenderable {
 
   getMoveDir() {
     return Math.sign(this.getStopY(this.targetStop) - this.y);
+  }
+
+  getLevel() {
+    return Math.round(this.y / this.getStopY(1));
+  }
+
+  getMinimapLevel() {
+    return Math.floor(this.y / ((this.getStopY(11) + 1) / 45));
   }
 
   // There are 12 stops
