@@ -23,6 +23,7 @@ class SearchablesSprites extends ThemedSprites {
     toilet: new Sprite(new Vector(318, 544), new Vector(24, 16)), // bathroom
     bin: new Sprite(new Vector(94, 564), new Vector(6, 7)), // bathroom
     sinkWithMirror: new Sprite(new Vector(240, 544), new Vector(30, 32)), // bathroom
+    terminal: new Sprite(new Vector(589, 544), new Vector(24, 22)),
   };
 
   constructor(plainSpritesSheet: HTMLImageElement) {

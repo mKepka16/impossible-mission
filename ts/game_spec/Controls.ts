@@ -6,6 +6,7 @@ export type Action =
   | 'jumpLeft'
   | 'jumpRight'
   | 'fallingLeft'
+  | 'searching'
   | 'fallingRight';
 
 class Controls {
@@ -16,12 +17,14 @@ class Controls {
   down: boolean = false;
   jumpLeft: boolean = false;
   jumpRight: boolean = false;
+  confirmBtn: boolean = false;
 
   prevAction: Action = 'standRight';
   action: Action = 'standRight';
   actionBlock: boolean = false;
   absoluteBlock: boolean = false;
   elevatorBlock: boolean = false;
+  searchBlock: boolean = false;
 
   constructor() {
     window.addEventListener('keydown', (e) => this.handleKeyDown(e));
@@ -42,6 +45,7 @@ class Controls {
     this.actionBlock = false;
     this.absoluteBlock = false;
     this.elevatorBlock = false;
+    this.searchBlock = false;
   }
 
   setAction(newAction: Action) {
@@ -52,11 +56,13 @@ class Controls {
   handleKeyDown(e: KeyboardEvent) {
     if (this.absoluteBlock) return;
     if (e.key == 'd' || e.key == 'ArrowRight') {
+      if (this.searchBlock) return;
       if (this.elevatorBlock) return;
       if (!this.actionBlock) this.setAction('runRight');
       this.right = true;
     }
     if (e.key == 'a' || e.key == 'ArrowLeft') {
+      if (this.searchBlock) return;
       if (this.elevatorBlock) return;
       if (!this.actionBlock) this.setAction('runLeft');
       this.left = true;
@@ -68,7 +74,11 @@ class Controls {
       this.down = true;
     }
     if (!this.actionBlock && e.key == ' ') {
-      if (this.elevatorBlock) return;
+      if (this.searchBlock) return;
+      if (this.elevatorBlock) {
+        this.confirmBtn = true;
+        return;
+      }
       if (this.action === 'runLeft' || this.action === 'standLeft') {
         this.setAction('jumpLeft');
         this.jumpLeft = true;
@@ -95,6 +105,9 @@ class Controls {
       this.up = false;
     }
     if (e.key == 's' || e.key == 'ArrowDown') return (this.down = false);
+    if (e.key === ' ') {
+      this.confirmBtn = false;
+    }
   }
 }
 

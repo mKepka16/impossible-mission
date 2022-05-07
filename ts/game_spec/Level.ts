@@ -9,6 +9,8 @@ import Vector from '../general/Vector';
 import Rooms from './Rooms';
 import ElevatorCorridor from './MainElevatorView/ElevatorCorridor';
 import Controls from './Controls';
+import Terminal from './Terminal';
+import { Robot } from './Robot';
 
 const SPAWN_POSITIONS = {
   leftTop: new Vector(54, 50),
@@ -20,7 +22,8 @@ const SPAWN_POSITIONS = {
 class Level extends View implements IRenderable {
   id: number;
   objects: IRenderable[];
-  static DEFAULT_GRAVITY = 1;
+  static DEFAULT_GRAVITY = 2.5;
+  robotsSnooze: boolean = false;
 
   constructor(id: number, objects: IRenderable[]) {
     super();
@@ -78,6 +81,7 @@ class Level extends View implements IRenderable {
   public update() {
     if (Player.r < 0) this.leaveRoomToThe('left');
     else if (Player.l > 960) this.leaveRoomToThe('right');
+    if (Player.t > 960) Player.kill();
 
     const dt = State.canvas.deltaTime;
     Player.update(dt, State.gravity, State.friction);
@@ -85,8 +89,15 @@ class Level extends View implements IRenderable {
     let playerFallingDown = true;
     for (let index = this.objects.length - 1; index > -1; --index) {
       let object = this.objects[index];
-      if (object.update) object?.update(dt, State.gravity, State.friction);
-      if (object instanceof Rectangle && Player.collideRectangle(object)) {
+      if (object.update) {
+        if (!(this.robotsSnooze && object instanceof Robot))
+          object?.update(dt, State.gravity, State.friction);
+      }
+      if (
+        object instanceof Rectangle &&
+        (this.robotsSnooze && object instanceof Robot) === false &&
+        Player.collideRectangle(object)
+      ) {
         playerFallingDown = false;
       }
     }
@@ -100,12 +111,29 @@ class Level extends View implements IRenderable {
       p.render(dt);
     });
     Player.render(dt);
+    this.objects
+      .filter((o) => o instanceof Terminal)
+      .forEach((terminal) => (terminal as Terminal).renderTerminalView());
   }
 
   renderBackground() {
     State.canvas.ctx.beginPath();
     State.canvas.ctx.fillStyle = levelsEntries[this.id].color;
     State.canvas.ctx.fillRect(0, 0, State.canvas.width, State.canvas.height);
+  }
+
+  resetLifts() {
+    this.objects
+      .filter((o) => o instanceof Elevator)
+      .forEach((elevator) => (elevator as Elevator).resetLift());
+  }
+
+  startRobotSnooze() {
+    this.robotsSnooze = true;
+    this.objects
+      .filter((o) => o instanceof Robot)
+      .forEach((robot) => ((robot as Robot).laser.currentSprite = null));
+    setTimeout(() => (this.robotsSnooze = false), 20000);
   }
 }
 

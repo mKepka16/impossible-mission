@@ -214,6 +214,8 @@ class Player extends Rectangle implements IRenderable {
       animationFrames = PlayerSprites.SPRITES.runLeft;
     } else if (Controls.action === 'standLeft') {
       animationFrames = [PlayerSprites.SPRITES.left];
+    } else if (Controls.action === 'searching') {
+      animationFrames = [PlayerSprites.SPRITES.back];
     } else if (Controls.action === 'jumpLeft') {
       animationFrames = PlayerSprites.SPRITES.jumpLeft;
       this.isAnimatingJump = true;
@@ -285,6 +287,7 @@ class Player extends Rectangle implements IRenderable {
     const newSprite = animationFrames[animFrameIndex];
 
     if (Controls.action === 'jumpRight' || Controls.action === 'jumpLeft') {
+      console.log(animFrameIndex);
       const animMovePercent = this.animationTime - animFrameIndex;
       if (this.currentSprite !== newSprite) {
         this.lastFrameY = this.t;
@@ -335,6 +338,7 @@ class Player extends Rectangle implements IRenderable {
     this.vy = 0;
     State.gravity = Level.DEFAULT_GRAVITY;
     Controls.resetControls();
+    State.currentLevel.resetLifts();
   }
 }
 
