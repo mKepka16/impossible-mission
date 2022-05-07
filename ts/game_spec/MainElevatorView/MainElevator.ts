@@ -6,7 +6,6 @@ import ElevatorCorridorSprites from '../../sprites/ElevatorCorridorSprites';
 import { Rectangle } from '../../collisions/Rectangle';
 import { NoCollisionBox } from '../../collisions/NoCollisionBox';
 import Controls from '../Controls';
-import Rooms from '../Rooms';
 
 class MainElevator implements IRenderable {
   y: number = 0;

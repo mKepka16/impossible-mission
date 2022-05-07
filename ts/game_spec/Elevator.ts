@@ -17,6 +17,8 @@ class Elevator extends Rectangle implements IRenderable, IGroupMember {
   objectsInGroup: (Elevator | ElevatorSpot)[];
   targetY: number;
   groupYCords: number[];
+  sl: number; //starting l
+  st: number; // starting t
 
   constructor(l: number, t: number, group: number) {
     const dimensions = BuildingsSprites.SPRITES.elevator.getRealDimensions();
@@ -26,6 +28,8 @@ class Elevator extends Rectangle implements IRenderable, IGroupMember {
       dimensions.x,
       dimensions.y
     );
+    this.sl = this.l;
+    this.st = this.t;
 
     this.targetY = this.t;
     this.group = group;
@@ -34,6 +38,11 @@ class Elevator extends Rectangle implements IRenderable, IGroupMember {
       new Vector(this.l + Player.w - 1, this.t - 20),
       new Vector(72 - Player.w * 2 + 2, 20)
     );
+  }
+
+  resetLift() {
+    this.targetY = this.st;
+    this.setTop(this.st);
   }
 
   static assignGroups(objects: IRenderable[]) {

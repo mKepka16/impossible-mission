@@ -11,8 +11,9 @@ class GameCanvas extends Canvas {
   onCanvasInState() {
     State.levels = getLevels();
     State.elevators = getElevators();
-    State.currentElevator = State.elevators[1];
-    State.scene = 'Elevator';
+    // State.currentElevator = State.elevators[1];
+    State.currentLevel = State.levels[0];
+    State.scene = 'Room';
   }
 
   update() {

@@ -4,6 +4,7 @@ import InfoSprites from '../sprites/InfoSprites';
 import PlayerSprites from '../sprites/PlayerSprites';
 import RobotSprites from '../sprites/RobotSprites';
 import SearchablesSprites from '../sprites/SearchablesSprites';
+import TerminalSprites from '../sprites/TerminalSprites';
 
 class Assets {
   static playerSprites: PlayerSprites;
@@ -12,9 +13,12 @@ class Assets {
   static infoSprites: InfoSprites;
   static searchablesSprites: SearchablesSprites;
   static elevatorCorridorSprites: ElevatorCorridorSprites;
+  static terminalSprites: TerminalSprites = new TerminalSprites();
 
   static async loadAssets() {
     const images = new Promise<void>((resolve, reject) => {
+      const imgCount = 5;
+      let loadedImgs = 0;
       const image = new Image();
       image.onload = () => {
         this.playerSprites = new PlayerSprites(image);
@@ -23,10 +27,33 @@ class Assets {
         this.infoSprites = new InfoSprites(image);
         this.searchablesSprites = new SearchablesSprites(image);
         this.elevatorCorridorSprites = new ElevatorCorridorSprites(image);
+        loadedImgs++;
 
-        resolve();
+        if (imgCount === loadedImgs) resolve();
       };
       image.src = './assets/sprites/main_sprites.png';
+
+      const terminalImgsSrcs = [
+        './assets/terminal/arrow.png',
+        './assets/terminal/passwordAccepted.png',
+        './assets/terminal/passwordRequired.png',
+        './assets/terminal/terminal.png',
+      ];
+      let i = 0;
+      for (const src of terminalImgsSrcs) {
+        const image = new Image();
+        if (i === 0) this.terminalSprites.addAsset('arrow', image);
+        if (i === 1) this.terminalSprites.addAsset('passwordAccepted', image);
+        if (i === 2) this.terminalSprites.addAsset('passwordRequired', image);
+        if (i === 3) this.terminalSprites.addAsset('terminal', image);
+
+        image.onload = () => {
+          loadedImgs++;
+          if (imgCount === loadedImgs) resolve();
+        };
+        image.src = src;
+        i++;
+      }
     });
 
     const c64font = new FontFace('c64', 'url(assets/c64font.woff)');
@@ -34,6 +61,7 @@ class Assets {
       // @ts-ignore
       document.fonts.add(font);
     });
+
     return Promise.all([images, font]);
   }
 }

@@ -7,7 +7,9 @@ import Vector from '../general/Vector';
 import InfoSprites from '../sprites/InfoSprites';
 import PlayerSprites from '../sprites/PlayerSprites';
 import SearchablesSprites from '../sprites/SearchablesSprites';
+import Sprite from '../sprites/Sprite';
 import Controls from './Controls';
+import Eq from './Eq';
 
 type SearchableType = keyof typeof SearchablesSprites.SPRITES;
 const playerWidth = PlayerSprites.SPRITES.left.getRealDimensions().x;
@@ -20,6 +22,7 @@ class Searchable extends NoCollisionBox implements IRenderable {
   searchStatus: TreasureInfo = null;
   searchProgress: number = Utils.getRandInt(0, 70);
   infoPos: Vector;
+  spriteBeforeSearch: Sprite;
   get sprite() {
     return SearchablesSprites.SPRITES[this.type];
   }
@@ -36,8 +39,13 @@ class Searchable extends NoCollisionBox implements IRenderable {
   getRandomTreasure(): Exclude<TreasureInfo, 'searching'> {
     const randInt = Utils.getRandInt(1, 3);
     if (randInt === 1) return 'no tresure';
-    else if (randInt === 2) return 'robot sleep';
-    else return 'lift reset';
+    else if (randInt === 2) {
+      Eq.snoozes++;
+      return 'robot sleep';
+    } else {
+      Eq.liftResets++;
+      return 'lift reset';
+    }
   }
 
   update(dt: number, g: number = 0, f: number = 0) {
@@ -47,11 +55,17 @@ class Searchable extends NoCollisionBox implements IRenderable {
       if (this.searchProgress > 100) {
         this.handleSearchFinished();
         this.isEmpty = true;
-      } else {
+        Controls.searchBlock = false;
+        Controls.setAction(Controls.prevAction);
+      } else if (this.searchStatus !== 'searching') {
         this.searchStatus = 'searching';
+        Controls.searchBlock = true;
+        Controls.setAction('searching');
       }
     } else if (this.searchStatus === 'searching') {
       this.searchStatus = null;
+      Controls.searchBlock = false;
+      Controls.setAction(Controls.prevAction);
     }
   }
 
