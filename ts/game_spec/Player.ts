@@ -245,7 +245,7 @@ class Player extends Rectangle implements IRenderable {
       dt,
       animationFrames,
       13,
-      // 4,
+      // 1,
       () => {
         if (this.isAnimatingJump) {
           if (Controls.action === 'jumpLeft') Controls.setAction('fallingLeft');
@@ -287,7 +287,6 @@ class Player extends Rectangle implements IRenderable {
     const newSprite = animationFrames[animFrameIndex];
 
     if (Controls.action === 'jumpRight' || Controls.action === 'jumpLeft') {
-      console.log(animFrameIndex);
       const animMovePercent = this.animationTime - animFrameIndex;
       if (this.currentSprite !== newSprite) {
         this.lastFrameY = this.t;

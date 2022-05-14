@@ -32,6 +32,7 @@ class State {
   }
 
   public set currentLevel(value) {
+    console.log('setting level', value.id);
     this._currentLevel = value;
     MiniMap.revealRoom(value.id);
   }

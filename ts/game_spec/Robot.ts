@@ -87,8 +87,10 @@ export class Robot
 
   constructor(movementData: MovementData) {
     super(
-      movementData.fromX,
-      movementData.y,
+      movementData.fromX * 24,
+      movementData.y * 24 -
+        RobotSprites.SPRITES.left[0].getRealDimensions().y +
+        6,
       RobotSprites.SPRITES.left[0].getRealDimensions().x,
       RobotSprites.SPRITES.left[0].getRealDimensions().y
     );
@@ -97,9 +99,14 @@ export class Robot
     this.actionsQueue = newRobotProperties.actionsQueue;
     this.rotationSpeed = newRobotProperties.rotationSpeed;
     this.movementData = {
-      ...movementData,
+      fromX: movementData.fromX * 24,
+      y:
+        movementData.y * 24 -
+        RobotSprites.SPRITES.left[0].getRealDimensions().y +
+        6,
       toX:
-        movementData.toX - RobotSprites.SPRITES.left[0].getRealDimensions().x,
+        movementData.toX * 24 -
+        RobotSprites.SPRITES.left[0].getRealDimensions().x,
     };
     this.currentAction = this.actionsQueue[0];
     this.previousAction = null;
