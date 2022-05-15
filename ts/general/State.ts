@@ -1,3 +1,4 @@
+import { isAssertionExpression } from '../../node_modules/typescript/lib/typescript';
 import GameCanvas from '../game_spec/GameCanvas';
 import Level from '../game_spec/Level';
 import ElevatorCorridor from '../game_spec/MainElevatorView/ElevatorCorridor';
@@ -32,9 +33,10 @@ class State {
   }
 
   public set currentLevel(value) {
-    console.log('setting level', value.id);
     this._currentLevel = value;
     MiniMap.revealRoom(value.id);
+    this.theme = value.theme;
+    Assets.reloadTheme();
   }
 }
 

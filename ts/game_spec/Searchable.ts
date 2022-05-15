@@ -4,6 +4,7 @@ import Assets from '../general/Assets';
 import State from '../general/State';
 import Utils from '../general/Utils';
 import Vector from '../general/Vector';
+import { levelsEntries } from '../presets/levels_presets';
 import InfoSprites from '../sprites/InfoSprites';
 import PlayerSprites from '../sprites/PlayerSprites';
 import SearchablesSprites from '../sprites/SearchablesSprites';
@@ -141,11 +142,11 @@ class Searchable extends NoCollisionBox implements IRenderable {
     );
     const searchBarLength = 8 * 24 * (currentStepNumber / stepAmount);
 
-    ctx.fillStyle = State.theme.background;
+    ctx.fillStyle = levelsEntries[State.currentLevel?.id]?.color;
     ctx.fillRect(realX, realY + 3 * 24 - 12, searchBarLength, 12);
 
     ctx.font = '21px c64';
-    ctx.fillStyle = State.theme.background;
+    ctx.fillStyle = levelsEntries[State.currentLevel?.id]?.color;
     ctx.fillText('Searching', realX, realY + 40);
   }
 
@@ -158,7 +159,7 @@ class Searchable extends NoCollisionBox implements IRenderable {
     ctx.fillRect(realX, realY, 8 * 24, 4 * 24);
 
     ctx.font = '21px c64';
-    ctx.fillStyle = State.theme.background;
+    ctx.fillStyle = levelsEntries[State.currentLevel?.id]?.color;
     ctx.fillText('Nothing', realX + 22, realY + 40);
     ctx.fillText('here.', realX + 52, realY + 80);
   }

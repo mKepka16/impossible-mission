@@ -53,6 +53,8 @@ export type RobotAction = RobotMoveAction | RobotAttackAction;
 
 export type ActionsQueue = RobotAction[];
 
+export const robotHitboxYOffset = 25;
+
 export class Robot
   extends Rectangle
   implements IRenderable, RobotProperties, IAnimated
@@ -90,9 +92,10 @@ export class Robot
       movementData.fromX * 24,
       movementData.y * 24 -
         RobotSprites.SPRITES.left[0].getRealDimensions().y +
+        robotHitboxYOffset +
         6,
       RobotSprites.SPRITES.left[0].getRealDimensions().x,
-      RobotSprites.SPRITES.left[0].getRealDimensions().y
+      RobotSprites.SPRITES.left[0].getRealDimensions().y - robotHitboxYOffset
     );
 
     const newRobotProperties = RobotPropertiesPreparer.getRobotProperties();
@@ -446,7 +449,7 @@ export class Robot
   render(dt: number) {
     Assets.robotSprites.renderSprite(
       this.currentSprite,
-      new Vector(this.l, this.t)
+      new Vector(this.l, this.t - robotHitboxYOffset)
     );
     this.laser.render(dt);
     // this.renderMovementArea();

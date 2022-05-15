@@ -108,6 +108,7 @@ class Player extends Rectangle implements IRenderable {
       this.currentSprite,
       new Vector(this.l, this.t)
     );
+    // this.drawColliders('#00ffff');
   }
 
   // Returns if player collide from the top

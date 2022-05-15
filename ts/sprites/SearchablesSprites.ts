@@ -30,16 +30,64 @@ class SearchablesSprites extends ThemedSprites {
   constructor(plainSpritesSheet: HTMLImageElement) {
     const theme: PixelChange[] = [
       {
-        old: [9, 0, 0],
+        old: [1, 0, 0],
         new: State.theme.furniture.color1,
       },
       {
-        old: [1, 0, 0],
+        old: [2, 0, 0],
+        new: State.theme.furniture.color2,
+      },
+      {
+        old: [3, 0, 0],
         new: State.theme.furniture.color3,
       },
       {
+        old: [4, 0, 0],
+        new: State.theme.furniture.color4,
+      },
+      {
+        old: [5, 0, 0],
+        new: State.theme.furniture.color5,
+      },
+      {
+        old: [6, 0, 0],
+        new: State.theme.furniture.color6,
+      },
+      {
+        old: [7, 0, 0],
+        new: State.theme.furniture.color7,
+      },
+      {
+        old: [8, 0, 0],
+        new: State.theme.furniture.color8,
+      },
+      {
+        old: [9, 0, 0],
+        new: State.theme.furniture.color9,
+      },
+      {
         old: [10, 0, 0],
-        new: State.theme.furniture.color1,
+        new: State.theme.furniture.color10,
+      },
+      {
+        old: [11, 0, 0],
+        new: State.theme.furniture.color11,
+      },
+      {
+        old: [12, 0, 0],
+        new: State.theme.furniture.color12,
+      },
+      {
+        old: [13, 0, 0],
+        new: State.theme.furniture.color13,
+      },
+      {
+        old: [14, 0, 0],
+        new: State.theme.furniture.color14,
+      },
+      {
+        old: [15, 0, 0],
+        new: State.theme.furniture.color15,
       },
     ];
     super(theme, plainSpritesSheet);

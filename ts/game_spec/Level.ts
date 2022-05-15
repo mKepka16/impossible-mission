@@ -11,6 +11,7 @@ import ElevatorCorridor from './MainElevatorView/ElevatorCorridor';
 import Controls from './Controls';
 import Terminal from './Terminal';
 import { Robot } from './Robot';
+import Theme from '../sprites/Theme';
 
 const SPAWN_POSITIONS = {
   leftTop: new Vector(54, 50),
@@ -24,11 +25,13 @@ class Level extends View implements IRenderable {
   objects: IRenderable[];
   static DEFAULT_GRAVITY = 2.5;
   robotsSnooze: boolean = false;
+  theme: Theme;
 
-  constructor(id: number, objects: IRenderable[]) {
+  constructor(id: number, objects: IRenderable[], theme: Theme = Theme.THEME0) {
     super();
     this.id = id;
     this.objects = objects;
+    this.theme = theme;
     Elevator.assignGroups(this.objects);
   }
 
@@ -58,22 +61,27 @@ class Level extends View implements IRenderable {
   }
 
   movePlayerToSpawnPoint() {
+    console.log('move player to spawnpoint');
     Player.setTop(this.playerStartingPosition.y);
     Player.setLeft(this.playerStartingPosition.x);
   }
 
   setLeftSpawnPoint() {
     if (levelsEntries[this.id].left === 'top') {
+      console.log('left top');
       this.playerStartingPosition = SPAWN_POSITIONS.leftTop;
     } else {
+      console.log('left bottom');
       this.playerStartingPosition = SPAWN_POSITIONS.leftBottom;
     }
   }
 
   setRightSpawnPoint() {
     if (levelsEntries[this.id].right === 'top') {
+      console.log('right top');
       this.playerStartingPosition = SPAWN_POSITIONS.rightTop;
     } else {
+      console.log('right bottom');
       this.playerStartingPosition = SPAWN_POSITIONS.rightBottom;
     }
   }
@@ -95,7 +103,7 @@ class Level extends View implements IRenderable {
       }
       if (
         object instanceof Rectangle &&
-        (this.robotsSnooze && object instanceof Robot) === false &&
+        object instanceof Robot === false &&
         Player.collideRectangle(object)
       ) {
         playerFallingDown = false;

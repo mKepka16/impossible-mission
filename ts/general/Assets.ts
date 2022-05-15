@@ -14,6 +14,14 @@ class Assets {
   static searchablesSprites: SearchablesSprites;
   static elevatorCorridorSprites: ElevatorCorridorSprites;
   static terminalSprites: TerminalSprites = new TerminalSprites();
+  static image: HTMLImageElement;
+
+  static async reloadTheme() {
+    this.buildingsSprites = new BuildingsSprites(this.image);
+    this.robotSprites = new RobotSprites(this.image);
+    this.infoSprites = new InfoSprites(this.image);
+    this.searchablesSprites = new SearchablesSprites(this.image);
+  }
 
   static async loadAssets() {
     const images = new Promise<void>((resolve, reject) => {
@@ -21,6 +29,7 @@ class Assets {
       let loadedImgs = 0;
       const image = new Image();
       image.onload = () => {
+        this.image = image;
         this.playerSprites = new PlayerSprites(image);
         this.buildingsSprites = new BuildingsSprites(image);
         this.robotSprites = new RobotSprites(image);
