@@ -2,6 +2,7 @@ import Canvas from '../general/Canvas';
 import State from '../general/State';
 import { getElevators } from '../presets/elevators_presents';
 import { getLevels } from '../presets/levels_presets';
+import Controls from './Controls';
 
 class GameCanvas extends Canvas {
   constructor(_canvas: HTMLCanvasElement, _width: number, _height: number) {
@@ -12,7 +13,7 @@ class GameCanvas extends Canvas {
     State.levels = getLevels();
     State.elevators = getElevators();
     State.currentElevator = State.elevators[1];
-    // State.currentLevel = State.levels[26];
+    // State.currentLevel = State.levels[20];
     State.scene = 'Elevator';
   }
 
@@ -25,6 +26,7 @@ class GameCanvas extends Canvas {
       State.currentLevel.render();
     }
     this.showFPS('black');
+    console.log(Controls.actionBlock);
   }
 }
 

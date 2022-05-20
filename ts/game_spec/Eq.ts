@@ -1,14 +1,56 @@
+import State from '../general/State';
+import Utils from '../general/Utils';
+import { getHexName, levelsEntries } from '../presets/levels_presets';
 import PuzzleItem from './MainElevatorView/PuzzleItem';
+
+interface PuzzleId {
+  puzzleNumber: number;
+  puzzleItemNumber: number;
+}
 
 class Eq {
   snoozes: number = 0;
   liftResets: number = 0;
-  puzzles: PuzzleItem[] = [
-    new PuzzleItem(0, 0, 'green', true, false),
-    new PuzzleItem(0, 1, 'blue', true, true),
-    new PuzzleItem(0, 2, 'yellow', false, false),
-    new PuzzleItem(0, 3, 'green', true, false),
-  ];
+  puzzles: PuzzleItem[] = [];
+  availablePuzzlesIds: PuzzleId[] = [];
+
+  constructor() {
+    for (let puzzleNumber = 0; puzzleNumber < 9; puzzleNumber++) {
+      for (let puzzleItemNumber = 0; puzzleItemNumber < 4; puzzleItemNumber++) {
+        this.availablePuzzlesIds.push({ puzzleItemNumber, puzzleNumber });
+      }
+    }
+  }
+
+  takeOutRandomPuzzle(): PuzzleId {
+    const puzzleIndex = Utils.getRandInt(
+      0,
+      this.availablePuzzlesIds.length - 1
+    );
+    const puzzleId = this.availablePuzzlesIds[puzzleIndex];
+    this.availablePuzzlesIds.splice(puzzleIndex, 1);
+    return puzzleId;
+  }
+
+  getPuzzle() {
+    const color = getHexName(levelsEntries[State.currentLevel.id].color);
+    const horMirror = this.getTrueOrFalse();
+    const vertMirror = this.getTrueOrFalse();
+    const puzzleId = this.takeOutRandomPuzzle();
+    const puzzle = new PuzzleItem(
+      puzzleId.puzzleNumber,
+      puzzleId.puzzleItemNumber,
+      color,
+      horMirror,
+      vertMirror
+    );
+    this.puzzles.push(puzzle);
+    return puzzle;
+  }
+
+  getTrueOrFalse() {
+    return Utils.getRandInt(0, 1) === 0;
+  }
 }
 
 export default new Eq();

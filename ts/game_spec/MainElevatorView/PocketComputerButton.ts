@@ -42,7 +42,7 @@ class PocketComputerButton extends NoCollisionBox {
   }
 
   render() {
-    this.drawBorders();
+    // this.drawBorders();
   }
 }
 

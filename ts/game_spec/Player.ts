@@ -161,6 +161,7 @@ class Player extends Rectangle implements IRenderable {
 
     if (Controls.jump && !this.jumping && !Controls.actionBlock) {
       this.jumping = true;
+      console.log('setting action block');
       Controls.actionBlock = true;
       this.vx = 0;
       this.vy = 0;

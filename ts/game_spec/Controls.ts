@@ -20,6 +20,7 @@ class Controls {
   jumpLeft: boolean = false;
   jumpRight: boolean = false;
   confirmBtn: boolean = false;
+  space: boolean = false;
 
   prevAction: Action = 'standRight';
   action: Action = 'standRight';
@@ -28,7 +29,7 @@ class Controls {
   elevatorBlock: boolean = false;
   searchBlock: boolean = false;
 
-  isCursorMode: boolean = true;
+  isCursorMode: boolean = false;
   cursor = {
     left: false,
     right: false,
@@ -86,21 +87,21 @@ class Controls {
       if (!this.actionBlock) this.setAction('runLeft');
       this.left = true;
     }
-    if (!this.actionBlock && (e.key == 'w' || e.key == 'ArrowUp')) {
+    if (e.key == 'w' || e.key == 'ArrowUp') {
       if (this.isCursorMode) {
         this.cursor.up = true;
         return;
       }
-      this.up = true;
+      if (!this.actionBlock) this.up = true;
     }
-    if (!this.actionBlock && (e.key == 's' || e.key == 'ArrowDown')) {
+    if (e.key == 's' || e.key == 'ArrowDown') {
       if (this.isCursorMode) {
         this.cursor.down = true;
         return;
       }
-      this.down = true;
+      if (!this.actionBlock) this.down = true;
     }
-    if (!this.actionBlock && e.key == ' ') {
+    if (e.key == ' ') {
       // const elevatorMoving = false;
       // if (
       //   this.isCursorMode === false &&
@@ -113,20 +114,29 @@ class Controls {
         this.cursor.space = true;
         return;
       }
+      if (this.actionBlock) return;
       if (this.searchBlock) return;
       if (this.elevatorBlock) {
         this.confirmBtn = true;
         return;
       }
-      if (this.action === 'runLeft' || this.action === 'standLeft') {
+      if (
+        this.action === 'runLeft' ||
+        (this.action === 'standLeft' && State.scene === 'Room')
+      ) {
         this.setAction('jumpLeft');
         this.jumpLeft = true;
+        this.jump = true;
       }
-      if (this.action === 'runRight' || this.action === 'standRight') {
+      if (
+        this.action === 'runRight' ||
+        (this.action === 'standRight' && State.scene === 'Room')
+      ) {
         this.setAction('jumpRight');
         this.jumpRight = true;
+        this.jump = true;
       }
-      this.jump = true;
+      this.space = true;
     }
   }
 
@@ -153,6 +163,7 @@ class Controls {
     if (e.key === ' ') {
       this.cursor.space = false;
       this.confirmBtn = false;
+      this.space = false;
     }
   }
 }

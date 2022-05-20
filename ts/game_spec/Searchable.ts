@@ -11,11 +11,17 @@ import SearchablesSprites from '../sprites/SearchablesSprites';
 import Sprite from '../sprites/Sprite';
 import Controls from './Controls';
 import Eq from './Eq';
+import PuzzleItem from './MainElevatorView/PuzzleItem';
 
 type SearchableType = keyof typeof SearchablesSprites.SPRITES;
 const playerWidth = PlayerSprites.SPRITES.left.getRealDimensions().x;
 
-type TreasureInfo = 'no tresure' | 'robot sleep' | 'lift reset' | 'searching';
+type TreasureInfo =
+  | 'no tresure'
+  | 'robot sleep'
+  | 'lift reset'
+  | 'searching'
+  | 'puzzle';
 
 class Searchable extends NoCollisionBox implements IRenderable {
   type: SearchableType;
@@ -24,6 +30,7 @@ class Searchable extends NoCollisionBox implements IRenderable {
   searchProgress: number = Utils.getRandInt(0, 70);
   infoPos: Vector;
   spriteBeforeSearch: Sprite;
+  currentPuzzle: PuzzleItem;
   get sprite() {
     return SearchablesSprites.SPRITES[this.type];
   }
@@ -38,14 +45,22 @@ class Searchable extends NoCollisionBox implements IRenderable {
   }
 
   getRandomTreasure(): Exclude<TreasureInfo, 'searching'> {
-    const randInt = Utils.getRandInt(1, 3);
+    State.searchablesLeftAmount--;
+    if (State.searchablesLeftAmount <= Eq.availablePuzzlesIds.length) {
+      this.currentPuzzle = Eq.getPuzzle();
+      return 'puzzle';
+    }
+    const randInt = Utils.getRandInt(1, 4);
     if (randInt === 1) return 'no tresure';
     else if (randInt === 2) {
       Eq.snoozes++;
       return 'robot sleep';
-    } else {
+    } else if (randInt === 3) {
       Eq.liftResets++;
       return 'lift reset';
+    } else {
+      this.currentPuzzle = Eq.getPuzzle();
+      return 'puzzle';
     }
   }
 
@@ -100,6 +115,9 @@ class Searchable extends NoCollisionBox implements IRenderable {
       case 'searching':
         this.renderSearchInProgressInfo();
         break;
+      case 'puzzle':
+        this.renderPuzzleInfo();
+        break;
     }
   }
 
@@ -148,6 +166,21 @@ class Searchable extends NoCollisionBox implements IRenderable {
     ctx.font = '21px c64';
     ctx.fillStyle = levelsEntries[State.currentLevel?.id]?.color;
     ctx.fillText('Searching', realX, realY + 40);
+  }
+
+  renderPuzzleInfo() {
+    const { x, y } = this.infoPos;
+    const realX = x * 24;
+    const realY = y * 24;
+    const ctx = State.canvas.ctx;
+
+    ctx.fillStyle = 'white';
+    ctx.fillRect(realX, realY, 8 * 24, 4 * 24);
+
+    const offset = new Vector(4 * 24 - 24 * 3, 2 * 24 - 21 * 1.5);
+    this.currentPuzzle.render(new Vector(realX, realY).add(offset));
+
+    console.log('rendering puzzle info');
   }
 
   renderNothingHereInfo() {

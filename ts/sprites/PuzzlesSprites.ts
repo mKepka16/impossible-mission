@@ -1,7 +1,6 @@
 import PuzzleItem from '../game_spec/MainElevatorView/PuzzleItem';
 import PuzzlesCombination from '../game_spec/MainElevatorView/PuzzlesCombination';
 import Vector from '../general/Vector';
-import { YELLOW } from '../presets/levels_presets';
 import Sprite from './Sprite';
 import ThemedSprites, { Pixel, PixelChange } from './ThemedSprites';
 
