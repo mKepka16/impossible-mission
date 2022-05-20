@@ -6,6 +6,7 @@ import ElevatorCorridorSprites from '../../sprites/ElevatorCorridorSprites';
 import { Rectangle } from '../../collisions/Rectangle';
 import { NoCollisionBox } from '../../collisions/NoCollisionBox';
 import Controls from '../Controls';
+import SoundController from '../../general/SoundController';
 
 class MainElevator implements IRenderable {
   y: number = 0;
@@ -24,6 +25,19 @@ class MainElevator implements IRenderable {
   }
 
   update(dt: number) {
+    if (this.isMoving && !SoundController.isPlaying('elevatorStart')) {
+      SoundController.play('elevatorStart');
+    }
+    if (
+      !this.isMoving &&
+      SoundController.isPlaying('elevatorStart') &&
+      (!Controls.down || this.targetStop === 11) &&
+      (!Controls.up || this.targetStop === 0)
+    ) {
+      SoundController.stop('elevatorStart');
+      SoundController.play('elevatorStop');
+    }
+
     const targetY = this.getStopY(this.targetStop);
     const yDiff = targetY - this.y;
     const dir = Math.sign(yDiff);

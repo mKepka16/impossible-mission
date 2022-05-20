@@ -5,6 +5,7 @@ import MiniMap from '../game_spec/MainElevatorView/MiniMap';
 import Searchable from '../game_spec/Searchable';
 import Theme from '../sprites/Theme';
 import Assets from './Assets';
+import SoundController from './SoundController';
 
 type Scene = 'Elevator' | 'Room';
 
@@ -17,9 +18,22 @@ class State {
   public elevators: { [id: number]: ElevatorCorridor } = null;
   public gravity: number = Level.DEFAULT_GRAVITY;
   public friction: number = 0.6;
-  public scene: Scene = 'Elevator';
+  private _scene: Scene = 'Elevator';
   public allSearchablesNumber: number = 0;
   public searchablesLeftAmount: number = 0;
+
+  public get scene() {
+    return this._scene;
+  }
+
+  public set scene(value) {
+    if (value === 'Room') {
+      SoundController.play('droid');
+    } else {
+      SoundController.stop('droid');
+    }
+    this._scene = value;
+  }
 
   public get levels() {
     return this._levels;

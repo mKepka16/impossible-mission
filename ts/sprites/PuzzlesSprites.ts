@@ -50,19 +50,12 @@ class PuzzlesSprites extends ThemedSprites {
   static isSolved(puzzleCombination: PuzzlesCombination): boolean {
     if (puzzleCombination.puzzlesItems.length !== 4) return false;
     const firstPuzzleItem = puzzleCombination.puzzlesItems[0];
-    console.log(
-      'vert mirr',
-      firstPuzzleItem.vertMirror,
-      'horz mirr',
-      firstPuzzleItem.horMirror
-    );
 
     if (firstPuzzleItem.horMirror || firstPuzzleItem.vertMirror) return false;
     const canvas =
       puzzleCombination.puzzlesSprites.getPuzzlesCombinationCanvas(
         puzzleCombination
       );
-    console.log('comparing');
     for (let i = 0; i < 9; i++) {
       const solvedPuzzleSprite = PuzzlesSprites.getSolvedPuzzleSprite(i);
       const solvedPuzzleCanvas =
@@ -196,17 +189,13 @@ class PuzzlesSprites extends ThemedSprites {
     return partOfCanvas;
   }
 
-  getComparableCanvas({ color, sprite, horMirror, vertMirror }: PuzzleItem) {
-    // console.log(color);
-    // const debugCanvas = document.querySelector('.debug-canvas-container');
+  getComparableCanvas({ sprite, horMirror, vertMirror }: PuzzleItem) {
     const spriteCanvas = this.getMirroredCanvasFromSprite(
       sprite,
       horMirror,
       vertMirror
     );
     const partOfCanvas = this.getPartOfCanvasToCompare(spriteCanvas);
-    // debugCanvas.appendChild(spriteCanvas);
-    // debugCanvas.appendChild(partOfCanvas);
     return partOfCanvas;
   }
 

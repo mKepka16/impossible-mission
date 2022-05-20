@@ -191,7 +191,6 @@ class PocketComputer implements IRenderable {
       isElevatorMoving === false &&
       Controls.space
     ) {
-      console.log('setting cursor mode true');
       this.cursorPos = new Vector(480, 400);
       Controls.isCursorMode = true;
     }

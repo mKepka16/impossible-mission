@@ -179,8 +179,6 @@ class Searchable extends NoCollisionBox implements IRenderable {
 
     const offset = new Vector(4 * 24 - 24 * 3, 2 * 24 - 21 * 1.5);
     this.currentPuzzle.render(new Vector(realX, realY).add(offset));
-
-    console.log('rendering puzzle info');
   }
 
   renderNothingHereInfo() {

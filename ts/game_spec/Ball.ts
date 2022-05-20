@@ -1,7 +1,7 @@
 import { IRenderable } from '../collisions/IRenderable';
 import { Rectangle } from '../collisions/Rectangle';
 import Assets from '../general/Assets';
-import State from '../general/State';
+import SoundController from '../general/SoundController';
 import Vector from '../general/Vector';
 import RobotSprites from '../sprites/RobotSprites';
 import Player from './Player';
@@ -31,7 +31,8 @@ class Ball extends Rectangle implements IRenderable {
     this.setTop(
       (this.startingY + movementSize * scale * Math.sin(2 * this.time)) / 2
     );
-    if (this.isColliding(Player)) {
+    if (this.isColliding(Player) && Player.isAnimatingDeath === false) {
+      SoundController.play('dieByZap');
       Player.kill();
     }
   }

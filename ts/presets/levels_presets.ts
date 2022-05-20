@@ -1118,6 +1118,7 @@ export const getLevels = (): { [id: number]: Level } => ({
 
       new Robot({ fromX: 15, toX: 23, y: 24 }),
       new Robot({ fromX: 25, toX: 39, y: 21 }),
+      new Ball(450, 330),
     ],
     Theme.THEME16
   ), // without left exit
@@ -1246,6 +1247,7 @@ export const getLevels = (): { [id: number]: Level } => ({
 
       new Robot({ fromX: 15, toX: 23, y: 24 }),
       new Robot({ fromX: 25, toX: 39, y: 21 }),
+      new Ball(450, 330),
     ],
     Theme.THEME16
   ),
@@ -1330,6 +1332,7 @@ export const getLevels = (): { [id: number]: Level } => ({
 
       new Robot({ fromX: 15, toX: 23, y: 24 }),
       new Robot({ fromX: 25, toX: 39, y: 21 }),
+      new Ball(450, 330),
     ],
     Theme.THEME16
   ),

@@ -8,6 +8,7 @@ import { Rectangle } from '../collisions/Rectangle';
 import Sprite from '../sprites/Sprite';
 import State from '../general/State';
 import Vector from '../general/Vector';
+import SoundController from '../general/SoundController';
 
 class Player extends Rectangle implements IRenderable {
   jumping: boolean;
@@ -161,7 +162,6 @@ class Player extends Rectangle implements IRenderable {
 
     if (Controls.jump && !this.jumping && !Controls.actionBlock) {
       this.jumping = true;
-      console.log('setting action block');
       Controls.actionBlock = true;
       this.vx = 0;
       this.vy = 0;
@@ -250,16 +250,35 @@ class Player extends Rectangle implements IRenderable {
       // 1,
       () => {
         if (this.isAnimatingJump) {
-          if (Controls.action === 'jumpLeft') Controls.setAction('fallingLeft');
-          else if (Controls.action === 'jumpRight')
+          if (
+            Controls.action === 'jumpLeft' ||
+            Controls.action === 'standLeft' ||
+            Controls.action === 'runLeft'
+          )
+            Controls.setAction('fallingLeft');
+          else if (
+            Controls.action === 'jumpRight' ||
+            Controls.action === 'standRight' ||
+            Controls.action === 'runRight'
+          )
             Controls.setAction('fallingRight');
+
           State.gravity = Level.DEFAULT_GRAVITY;
           this.isAnimatingJump = false;
+
           if (this.jumping === false) {
             Controls.actionBlock = false;
-            if (Controls.right) {
+            if (
+              Controls.action === 'jumpRight' ||
+              Controls.action === 'fallingRight'
+            ) {
+              SoundController.play('jumpRight');
               Controls.setAction('runRight');
-            } else if (Controls.left) {
+            } else if (
+              Controls.action === 'jumpLeft' ||
+              Controls.action === 'fallingLeft'
+            ) {
+              SoundController.play('jumpLeft');
               Controls.setAction('runLeft');
             }
           }
@@ -269,6 +288,7 @@ class Player extends Rectangle implements IRenderable {
   }
 
   lastFrameY: number;
+  lastAnimationIndex = -1;
   animate(
     dt: number,
     animationFrames: Sprite[],
@@ -285,6 +305,15 @@ class Player extends Rectangle implements IRenderable {
       animFrameIndex = 0;
       this.animationTime = 0;
     }
+
+    if (this.lastAnimationIndex !== animFrameIndex) {
+      if (Controls.action === 'runLeft' && [2, 9].includes(animFrameIndex))
+        SoundController.play('stepLeft');
+      if (Controls.action === 'runRight' && [2, 9].includes(animFrameIndex))
+        SoundController.play('stepRight');
+    }
+
+    this.lastAnimationIndex = animFrameIndex;
 
     const newSprite = animationFrames[animFrameIndex];
 

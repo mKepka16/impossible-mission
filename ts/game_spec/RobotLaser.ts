@@ -1,6 +1,7 @@
 import { IRenderable } from '../collisions/IRenderable';
 import { Rectangle } from '../collisions/Rectangle';
 import Assets from '../general/Assets';
+import SoundController from '../general/SoundController';
 import Vector from '../general/Vector';
 import RobotLaserSprites from '../sprites/RobotLaserSprites';
 import Sprite from '../sprites/Sprite';
@@ -28,7 +29,12 @@ export class RobotLaser extends Rectangle implements IRenderable, IAnimated {
   }
 
   update(dt: number) {
-    if (this.isActive && this.isColliding(Player)) {
+    if (
+      this.isActive &&
+      this.isColliding(Player) &&
+      Player.isAnimatingDeath === false
+    ) {
+      SoundController.play('dieByZap');
       Player.kill();
     }
     this.handleAnimation(dt);
