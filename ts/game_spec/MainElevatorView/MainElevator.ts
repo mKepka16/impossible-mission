@@ -19,6 +19,10 @@ class MainElevator implements IRenderable {
   leftWallBlock: Rectangle = new Rectangle(408, 100, 18, 200);
   rightWallBlock: Rectangle = new Rectangle(534, 100, 18, 200);
 
+  get isMoving() {
+    return this.y !== this.getStopY(this.targetStop);
+  }
+
   update(dt: number) {
     const targetY = this.getStopY(this.targetStop);
     const yDiff = targetY - this.y;

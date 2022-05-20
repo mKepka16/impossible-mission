@@ -12,6 +12,7 @@ import Controls from './Controls';
 import Terminal from './Terminal';
 import { Robot } from './Robot';
 import Theme from '../sprites/Theme';
+import Ball from './Ball';
 
 const SPAWN_POSITIONS = {
   leftTop: new Vector(54, 50),
@@ -104,6 +105,7 @@ class Level extends View implements IRenderable {
       if (
         object instanceof Rectangle &&
         object instanceof Robot === false &&
+        object instanceof Ball === false &&
         Player.collideRectangle(object)
       ) {
         playerFallingDown = false;

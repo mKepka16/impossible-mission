@@ -44,6 +44,7 @@ class RobotSprites extends ThemedSprites {
     ],
     lookLeft: new Sprite(new Vector(52, 579), new Vector(14, 21)),
     lookRight: new Sprite(new Vector(66, 579), new Vector(14, 21)),
+    ball: new Sprite(new Vector(0, 581), new Vector(24, 19)),
   };
 
   constructor(plainSpritesSheet: HTMLImageElement) {
@@ -63,6 +64,10 @@ class RobotSprites extends ThemedSprites {
       {
         old: [14, 0, 0],
         new: State.theme.robot.primary,
+      },
+      {
+        old: [1, 0, 0],
+        new: [32, 27, 167],
       },
     ];
     super(theme, plainSpritesSheet);

@@ -27,6 +27,20 @@ class ThemedSprites {
     this.canvas = this.recolorImage(this.plainSpritesSheet);
   }
 
+  copyCanvas(canvas: HTMLCanvasElement): HTMLCanvasElement {
+    const newCanvas = document.createElement('canvas');
+    newCanvas.height = canvas.height;
+    newCanvas.width = canvas.width;
+    const newCanvasCtx = newCanvas.getContext('2d');
+    newCanvasCtx.drawImage(canvas, 0, 0);
+    return newCanvas;
+  }
+
+  static getCanvasPixelsData(canvas: HTMLCanvasElement) {
+    const ctx = canvas.getContext('2d');
+    return ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  }
+
   recolorImage(img: HTMLImageElement): HTMLCanvasElement {
     var c = document.createElement('canvas');
     var ctx = c.getContext('2d');

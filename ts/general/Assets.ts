@@ -2,6 +2,8 @@ import BuildingsSprites from '../sprites/BuildingsSprites';
 import ElevatorCorridorSprites from '../sprites/ElevatorCorridorSprites';
 import InfoSprites from '../sprites/InfoSprites';
 import PlayerSprites from '../sprites/PlayerSprites';
+import PocketComputerSprites from '../sprites/PocketComputerSprites';
+import PuzzlesSprites from '../sprites/PuzzlesSprites';
 import RobotSprites from '../sprites/RobotSprites';
 import SearchablesSprites from '../sprites/SearchablesSprites';
 import TerminalSprites from '../sprites/TerminalSprites';
@@ -12,8 +14,12 @@ class Assets {
   static robotSprites: RobotSprites;
   static infoSprites: InfoSprites;
   static searchablesSprites: SearchablesSprites;
+  static pocketComputerSprites: PocketComputerSprites;
   static elevatorCorridorSprites: ElevatorCorridorSprites;
   static terminalSprites: TerminalSprites = new TerminalSprites();
+  static yellowPuzzlesSprites: PuzzlesSprites;
+  static bluePuzzlesSprites: PuzzlesSprites;
+  static greenPuzzlesSprites: PuzzlesSprites;
   static image: HTMLImageElement;
 
   static async reloadTheme() {
@@ -36,6 +42,10 @@ class Assets {
         this.infoSprites = new InfoSprites(image);
         this.searchablesSprites = new SearchablesSprites(image);
         this.elevatorCorridorSprites = new ElevatorCorridorSprites(image);
+        this.pocketComputerSprites = new PocketComputerSprites(image);
+        this.yellowPuzzlesSprites = new PuzzlesSprites(image, 'yellow');
+        this.greenPuzzlesSprites = new PuzzlesSprites(image, 'green');
+        this.bluePuzzlesSprites = new PuzzlesSprites(image, 'blue');
         loadedImgs++;
 
         if (imgCount === loadedImgs) resolve();

@@ -1,3 +1,4 @@
+import Ball from '../game_spec/Ball';
 import Elevator from '../game_spec/Elevator';
 import { ElevatorSpot } from '../game_spec/ElevatorSpot';
 import Level from '../game_spec/Level';
@@ -1201,6 +1202,7 @@ export const getLevels = (): { [id: number]: Level } => ({
 
       new Robot({ fromX: 15, toX: 23, y: 24 }),
       new Robot({ fromX: 25, toX: 39, y: 21 }),
+      new Ball(450, 330),
     ],
     Theme.THEME16
   ),
