@@ -36,7 +36,7 @@ class Elevator extends Rectangle implements IRenderable, IGroupMember {
     this.playerOnElevator = false;
     this.interactionBox = new NoCollisionBox(
       new Vector(this.l + Player.w - 1, this.t - 20),
-      new Vector(72 - Player.w * 2 + 2, 20)
+      new Vector(1, 20)
     );
   }
 
@@ -120,7 +120,8 @@ class Elevator extends Rectangle implements IRenderable, IGroupMember {
     if (
       this.playerOnElevator &&
       Controls.up &&
-      this.areInGroupElevatorsNotMoving()
+      this.areInGroupElevatorsNotMoving() &&
+      ['standLeft', 'standRight'].includes(Controls.action)
     ) {
       Controls.up = false;
       Controls.actionBlock = true;
@@ -132,7 +133,8 @@ class Elevator extends Rectangle implements IRenderable, IGroupMember {
     } else if (
       this.playerOnElevator &&
       Controls.down &&
-      this.areInGroupElevatorsNotMoving()
+      this.areInGroupElevatorsNotMoving() &&
+      ['standLeft', 'standRight'].includes(Controls.action)
     ) {
       Controls.down = false;
       Controls.actionBlock = true;
@@ -175,8 +177,8 @@ class Elevator extends Rectangle implements IRenderable, IGroupMember {
       BuildingsSprites.SPRITES.elevator,
       new Vector(this.l, this.t)
     );
-    // this.interactionBox.drawBorders();
-    // this.drawColliders('#0022ee');
+    this.interactionBox.drawBorders();
+    this.drawColliders('#0022ee');
   }
 }
 

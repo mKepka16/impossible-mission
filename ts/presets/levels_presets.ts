@@ -1435,6 +1435,12 @@ export function getRGB(color: LEVEL_COLORS): Pixel {
   else return [0, 0, 0] as Pixel;
 }
 
+export function getHexName(hexColor: LEVEL_COLORS) {
+  if (hexColor === BLUE) return 'blue';
+  else if (hexColor === GREEN) return 'green';
+  else return 'yellow';
+}
+
 export interface Entries {
   left: 'top' | 'bottom' | null;
   right: 'top' | 'bottom' | null;
