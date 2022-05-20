@@ -1,4 +1,3 @@
-import { collapseTextChangeRangesAcrossMultipleVersions } from '../../../node_modules/typescript/lib/typescript';
 import Assets from '../../general/Assets';
 import Vector from '../../general/Vector';
 import PuzzlesSprites, { PUZZLES_COLORS } from '../../sprites/PuzzlesSprites';

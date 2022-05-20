@@ -1,6 +1,7 @@
 import { IRenderable } from '../collisions/IRenderable';
 import { Rectangle } from '../collisions/Rectangle';
 import Assets from '../general/Assets';
+import SoundController from '../general/SoundController';
 import State from '../general/State';
 import Utils from '../general/Utils';
 import Vector from '../general/Vector';
@@ -59,6 +60,9 @@ export class Robot
   extends Rectangle
   implements IRenderable, RobotProperties, IAnimated
 {
+  // Audio
+  turnAudio = SoundController.getAudio('droidTurn');
+
   // Animation variables
   animationTime: number = 0;
   currentSprite: Sprite = RobotSprites.SPRITES.left[0];
@@ -376,22 +380,34 @@ export class Robot
 
     switch (this.currentAnimAction) {
       case RobotAnimAction.STAND_LEFT:
+        if (SoundController.isPlaying(this.turnAudio)) {
+          SoundController.stop(this.turnAudio);
+        }
         animIterations = Infinity;
         animSpeed = 5;
         animFrames = RobotSprites.SPRITES.left;
         break;
       case RobotAnimAction.STAND_RIGHT:
+        if (SoundController.isPlaying(this.turnAudio)) {
+          SoundController.stop(this.turnAudio);
+        }
         animIterations = Infinity;
         animSpeed = 5;
         animFrames = RobotSprites.SPRITES.right;
         break;
       case RobotAnimAction.ROTATE_LEFT_RIGHT:
+        if (!SoundController.isPlaying(this.turnAudio)) {
+          SoundController.play(this.turnAudio);
+        }
         animIterations = 1;
         animSpeed = this.rotationSpeed;
         animFrames = RobotSprites.SPRITES.leftToRight;
         this.isRotating = true;
         break;
       case RobotAnimAction.ROTATE_RIGHT_LEFT:
+        if (!SoundController.isPlaying(this.turnAudio)) {
+          SoundController.play(this.turnAudio);
+        }
         animIterations = 1;
         animSpeed = this.rotationSpeed;
         animFrames = RobotSprites.SPRITES.rightToLeft;
@@ -439,7 +455,10 @@ export class Robot
   }
 
   update(dt: number) {
-    if (this.isColliding(Player)) Player.kill();
+    if (this.isColliding(Player) && Player.isAnimatingDeath == false) {
+      SoundController.play('dieByZap');
+      Player.kill();
+    }
     this.handleBehaviour(dt);
     this.updatePosition(dt);
     this.laser.update(dt);

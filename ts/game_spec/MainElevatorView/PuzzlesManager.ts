@@ -74,7 +74,6 @@ class PuzzlesManager {
     }
     const hasMerged = puzzle.addCombination(this.draggedPuzzleCombination);
     if (!hasMerged) {
-      console.log('cannot merge those puzzles');
       return;
     }
     this.selectPuzzleCombination(puzzle);
@@ -139,7 +138,6 @@ class PuzzlesManager {
       this.isCollidingWithPuzzle(cursorPos, topPuzzleItemPosition) &&
       this.getTopPuzzleItem() !== undefined
     ) {
-      console.log('space over top puzzle item');
       if (
         this.draggedPuzzleCombination !== null &&
         this.draggedPuzzleCombination.puzzlesItems.length === 1 &&
@@ -169,7 +167,6 @@ class PuzzlesManager {
       ) {
         this.draggedPuzzleCombination = null;
       } else {
-        console.log('space over bottom puzzle item');
         this.draggedPuzzleCombination = PuzzlesCombination.from(
           this.getBottomPuzzleItem(),
           cursorPos
@@ -202,7 +199,6 @@ class PuzzlesManager {
       ) &&
       Controls.cursor.space &&
       this.isKeyDown === false;
-    // console.log('is colliding', isColliding);
     if (isColliding) this.isKeyDown = true;
     return isColliding;
   }

@@ -13,6 +13,7 @@ import Terminal from './Terminal';
 import { Robot } from './Robot';
 import Theme from '../sprites/Theme';
 import Ball from './Ball';
+import SoundController from '../general/SoundController';
 
 const SPAWN_POSITIONS = {
   leftTop: new Vector(54, 50),
@@ -62,27 +63,22 @@ class Level extends View implements IRenderable {
   }
 
   movePlayerToSpawnPoint() {
-    console.log('move player to spawnpoint');
     Player.setTop(this.playerStartingPosition.y);
     Player.setLeft(this.playerStartingPosition.x);
   }
 
   setLeftSpawnPoint() {
     if (levelsEntries[this.id].left === 'top') {
-      console.log('left top');
       this.playerStartingPosition = SPAWN_POSITIONS.leftTop;
     } else {
-      console.log('left bottom');
       this.playerStartingPosition = SPAWN_POSITIONS.leftBottom;
     }
   }
 
   setRightSpawnPoint() {
     if (levelsEntries[this.id].right === 'top') {
-      console.log('right top');
       this.playerStartingPosition = SPAWN_POSITIONS.rightTop;
     } else {
-      console.log('right bottom');
       this.playerStartingPosition = SPAWN_POSITIONS.rightBottom;
     }
   }
@@ -90,7 +86,10 @@ class Level extends View implements IRenderable {
   public update() {
     if (Player.r < 0) this.leaveRoomToThe('left');
     else if (Player.l > 960) this.leaveRoomToThe('right');
-    if (Player.t > 960) Player.kill();
+    if (Player.t > 960 && Player.isAnimatingDeath === false) {
+      SoundController.play('falling');
+      Player.kill();
+    }
 
     const dt = State.canvas.deltaTime;
     Player.update(dt, State.gravity, State.friction);

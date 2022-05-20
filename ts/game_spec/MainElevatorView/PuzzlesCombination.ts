@@ -3,7 +3,6 @@ import State from '../../general/State';
 import Vector from '../../general/Vector';
 import PuzzlesSprites, { PUZZLES_COLORS } from '../../sprites/PuzzlesSprites';
 import ThemedSprites from '../../sprites/ThemedSprites';
-import Eq from '../Eq';
 import PuzzleItem from './PuzzleItem';
 
 class PuzzlesCombination {

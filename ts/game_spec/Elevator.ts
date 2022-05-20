@@ -177,8 +177,8 @@ class Elevator extends Rectangle implements IRenderable, IGroupMember {
       BuildingsSprites.SPRITES.elevator,
       new Vector(this.l, this.t)
     );
-    this.interactionBox.drawBorders();
-    this.drawColliders('#0022ee');
+    // this.interactionBox.drawBorders();
+    // this.drawColliders('#0022ee');
   }
 }
 
