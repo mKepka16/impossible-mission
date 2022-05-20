@@ -24,21 +24,70 @@ class SearchablesSprites extends ThemedSprites {
     bin: new Sprite(new Vector(94, 564), new Vector(6, 7)), // bathroom
     sinkWithMirror: new Sprite(new Vector(240, 544), new Vector(30, 32)), // bathroom
     terminal: new Sprite(new Vector(589, 544), new Vector(24, 22)),
+    wideControlPanel: new Sprite(new Vector(388, 544), new Vector(40, 30)),
   };
 
   constructor(plainSpritesSheet: HTMLImageElement) {
     const theme: PixelChange[] = [
       {
-        old: [9, 0, 0],
+        old: [1, 0, 0],
         new: State.theme.furniture.color1,
       },
       {
-        old: [1, 0, 0],
+        old: [2, 0, 0],
+        new: State.theme.furniture.color2,
+      },
+      {
+        old: [3, 0, 0],
         new: State.theme.furniture.color3,
       },
       {
+        old: [4, 0, 0],
+        new: State.theme.furniture.color4,
+      },
+      {
+        old: [5, 0, 0],
+        new: State.theme.furniture.color5,
+      },
+      {
+        old: [6, 0, 0],
+        new: State.theme.furniture.color6,
+      },
+      {
+        old: [7, 0, 0],
+        new: State.theme.furniture.color7,
+      },
+      {
+        old: [8, 0, 0],
+        new: State.theme.furniture.color8,
+      },
+      {
+        old: [9, 0, 0],
+        new: State.theme.furniture.color9,
+      },
+      {
         old: [10, 0, 0],
-        new: State.theme.furniture.color1,
+        new: State.theme.furniture.color10,
+      },
+      {
+        old: [11, 0, 0],
+        new: State.theme.furniture.color11,
+      },
+      {
+        old: [12, 0, 0],
+        new: State.theme.furniture.color12,
+      },
+      {
+        old: [13, 0, 0],
+        new: State.theme.furniture.color13,
+      },
+      {
+        old: [14, 0, 0],
+        new: State.theme.furniture.color14,
+      },
+      {
+        old: [15, 0, 0],
+        new: State.theme.furniture.color15,
       },
     ];
     super(theme, plainSpritesSheet);

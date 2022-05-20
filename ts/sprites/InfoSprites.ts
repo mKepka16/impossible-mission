@@ -3,6 +3,7 @@ import ThemedSprites, { PixelChange } from './ThemedSprites';
 import Sprite from './Sprite';
 import State from '../general/State';
 import Vector from '../general/Vector';
+import { getRGB, levelsEntries } from '../presets/levels_presets';
 class InfoSprites extends ThemedSprites {
   static SPRITES = {
     platformsReset: new Sprite(new Vector(254, 521), new Vector(28, 23)),
@@ -13,7 +14,7 @@ class InfoSprites extends ThemedSprites {
     const theme: PixelChange[] = [
       {
         old: [5, 0, 0],
-        new: State.theme.backgroundRGB,
+        new: getRGB(levelsEntries[State.currentLevel?.id]?.color),
       },
       {
         old: [1, 0, 0],

@@ -6,6 +6,9 @@ import RobotLaserSprites from '../sprites/RobotLaserSprites';
 import Sprite from '../sprites/Sprite';
 import { IAnimated } from './IAnimated';
 import Player from './Player';
+import { robotHitboxYOffset } from './Robot';
+
+const robotLaserWidthOffset = 15;
 
 export class RobotLaser extends Rectangle implements IRenderable, IAnimated {
   animationTime: number = 0;
@@ -13,11 +16,13 @@ export class RobotLaser extends Rectangle implements IRenderable, IAnimated {
   iterationNumber: number = 0;
   wasPreviouslyActive: boolean = false;
   isActive: boolean = false;
+  currentSide: 'left' | 'right' = 'left';
   constructor() {
     super(
       0,
       0,
-      RobotLaserSprites.SPRITES.laser[0].getRealDimensions().x,
+      RobotLaserSprites.SPRITES.laser[0].getRealDimensions().x -
+        robotLaserWidthOffset,
       RobotLaserSprites.SPRITES.laser[0].getRealDimensions().y
     );
   }
@@ -32,18 +37,20 @@ export class RobotLaser extends Rectangle implements IRenderable, IAnimated {
   activateLaser(robotPosition: Rectangle, side: 'left' | 'right') {
     // offsetFromTheTopOfTheRobotInSprite is 0;
 
-    this.setTop(robotPosition.t);
+    this.setTop(robotPosition.t - robotHitboxYOffset);
     if (side === 'left') this.setRight(robotPosition.l);
     else if (side === 'right') this.setLeft(robotPosition.r);
+    this.currentSide = side;
 
     this.isActive = true;
   }
 
   render(dt: number) {
     if (this.currentSprite !== null) {
+      const xOffset = this.currentSide === 'left' ? -robotLaserWidthOffset : 0;
       Assets.robotSprites.renderSprite(
         this.currentSprite,
-        new Vector(this.l, this.t)
+        new Vector(this.l + xOffset, this.t)
       );
     }
   }

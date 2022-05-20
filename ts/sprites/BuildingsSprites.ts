@@ -3,6 +3,7 @@ import { Side } from '../game_spec/Wall';
 import Sprite from './Sprite';
 import State from '../general/State';
 import Vector from '../general/Vector';
+import Theme from './Theme';
 
 class BuildingsSprites extends ThemedSprites {
   static SPRITES = {
@@ -66,6 +67,14 @@ class BuildingsSprites extends ThemedSprites {
       },
     ];
     super(theme, plainSpritesSheet);
+  }
+
+  setNewTheme(theme: Theme) {
+    this.theme[0].new = theme.primary;
+    this.theme[1].new = theme.secondary;
+    this.theme[2].new = theme.accent;
+    this.theme[3].new = theme.special;
+    this.reloadTheme();
   }
 
   renderPlatforms(position: Vector, platformsNumber: number) {
