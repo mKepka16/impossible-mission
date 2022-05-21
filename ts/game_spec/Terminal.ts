@@ -1,6 +1,7 @@
 import { IRenderable } from '../collisions/IRenderable';
 import { NoCollisionBox } from '../collisions/NoCollisionBox';
 import Assets from '../general/Assets';
+import Debugger from '../general/Debugger';
 import State from '../general/State';
 import Vector from '../general/Vector';
 import SearchablesSprites from '../sprites/SearchablesSprites';
@@ -83,6 +84,7 @@ class Terminal extends NoCollisionBox implements IRenderable {
       SearchablesSprites.SPRITES.terminal,
       new Vector(this.pos.x, this.pos.y)
     );
+    if (Debugger.showFurnitureHitboxes) this.drawBorders('#aaaa5c');
   }
 
   renderTerminalView() {

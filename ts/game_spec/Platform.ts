@@ -3,6 +3,7 @@ import BuildingsSprites from '../sprites/BuildingsSprites';
 import { IRenderable } from '../collisions/IRenderable';
 import { Rectangle } from '../collisions/Rectangle';
 import Vector from '../general/Vector';
+import Debugger from '../general/Debugger';
 
 class Platform extends Rectangle implements IRenderable {
   platformsCount: number;
@@ -29,7 +30,8 @@ class Platform extends Rectangle implements IRenderable {
       new Vector(this.l, this.t),
       this.platformsCount
     );
-    // this.drawColliders('#11ee02');
+    if (Debugger.showWallsAndPlatformsHitboxes) this.drawColliders('#11ee02');
+    // this.drawColliders('#dd359a');
   }
 }
 

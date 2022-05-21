@@ -1,6 +1,7 @@
 import { IRenderable } from '../collisions/IRenderable';
 import { NoCollisionBox } from '../collisions/NoCollisionBox';
 import Assets from '../general/Assets';
+import Debugger from '../general/Debugger';
 import State from '../general/State';
 import Utils from '../general/Utils';
 import Vector from '../general/Vector';
@@ -99,6 +100,7 @@ class Searchable extends NoCollisionBox implements IRenderable {
         this.sprite,
         new Vector(this.pos.x - playerWidth / 2, this.pos.y)
       );
+      if (Debugger.showFurnitureHitboxes) this.drawBorders('#aaaa5c');
     }
 
     // this.drawBorders();

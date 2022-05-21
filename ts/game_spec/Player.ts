@@ -9,6 +9,7 @@ import Sprite from '../sprites/Sprite';
 import State from '../general/State';
 import Vector from '../general/Vector';
 import SoundController from '../general/SoundController';
+import Debugger from '../general/Debugger';
 
 class Player extends Rectangle implements IRenderable {
   jumping: boolean;
@@ -109,7 +110,7 @@ class Player extends Rectangle implements IRenderable {
       this.currentSprite,
       new Vector(this.l, this.t)
     );
-    // this.drawColliders('#00ffff');
+    if (Debugger.showPlayerHitbox) this.drawColliders('#00ffff');
   }
 
   // Returns if player collide from the top

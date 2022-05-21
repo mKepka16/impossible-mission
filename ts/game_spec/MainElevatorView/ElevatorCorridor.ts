@@ -2,6 +2,7 @@ import { IRenderable } from '../../collisions/IRenderable';
 import { IRenderableOnCamera } from '../../collisions/IRenderableOnCamera';
 import { Rectangle } from '../../collisions/Rectangle';
 import Assets from '../../general/Assets';
+import Debugger from '../../general/Debugger';
 import State from '../../general/State';
 import Vector from '../../general/Vector';
 import { levelsEntries } from '../../presets/levels_presets';
@@ -154,6 +155,12 @@ class ElevatorCorridor extends View implements IRenderable {
     this.renderElevatorTopAndBottom();
 
     PocketComputer.render(dt);
+
+    if (Debugger.showWallsAndPlatformsHitboxes) {
+      this.mainElevator.floor.drawColliders('#ff5500');
+      this.mainElevator.leftWallBlock.drawColliders('#ff5500');
+      this.mainElevator.rightWallBlock.drawColliders('#ff5500');
+    }
   }
 
   update() {
