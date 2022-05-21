@@ -1,6 +1,7 @@
 import { IRenderable } from '../collisions/IRenderable';
 import { Rectangle } from '../collisions/Rectangle';
 import Assets from '../general/Assets';
+import Debugger from '../general/Debugger';
 import SoundController from '../general/SoundController';
 import State from '../general/State';
 import Utils from '../general/Utils';
@@ -471,6 +472,7 @@ export class Robot
       new Vector(this.l, this.t - robotHitboxYOffset)
     );
     this.laser.render(dt);
+    if (Debugger.showEnemiesHitboxes) this.drawColliders('#ff0000');
     // this.renderMovementArea();
   }
 }

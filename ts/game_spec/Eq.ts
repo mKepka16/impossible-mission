@@ -48,6 +48,24 @@ class Eq {
     return puzzle;
   }
 
+  getRandomPuzzle() {
+    const colorIndex = Utils.getRandInt(1, 3);
+    const color =
+      colorIndex === 1 ? 'green' : colorIndex === 2 ? 'blue' : 'yellow';
+    const horMirror = this.getTrueOrFalse();
+    const vertMirror = this.getTrueOrFalse();
+    const puzzleId = this.takeOutRandomPuzzle();
+    const puzzle = new PuzzleItem(
+      puzzleId.puzzleNumber,
+      puzzleId.puzzleItemNumber,
+      color,
+      horMirror,
+      vertMirror
+    );
+    this.puzzles.push(puzzle);
+    return puzzle;
+  }
+
   getTrueOrFalse() {
     return Utils.getRandInt(0, 1) === 0;
   }

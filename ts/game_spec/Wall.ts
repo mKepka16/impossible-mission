@@ -3,6 +3,7 @@ import BuildingsSprites from '../sprites/BuildingsSprites';
 import { IRenderable } from '../collisions/IRenderable';
 import { Rectangle } from '../collisions/Rectangle';
 import Vector from '../general/Vector';
+import Debugger from '../general/Debugger';
 
 export type Side = 'left' | 'right';
 
@@ -29,6 +30,7 @@ class Wall extends Rectangle implements IRenderable {
       this.wallCount,
       this.side
     );
+    if (Debugger.showWallsAndPlatformsHitboxes) this.drawColliders('#dd359a');
   }
 }
 

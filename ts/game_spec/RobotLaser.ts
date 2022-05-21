@@ -1,6 +1,7 @@
 import { IRenderable } from '../collisions/IRenderable';
 import { Rectangle } from '../collisions/Rectangle';
 import Assets from '../general/Assets';
+import Debugger from '../general/Debugger';
 import SoundController from '../general/SoundController';
 import Vector from '../general/Vector';
 import RobotLaserSprites from '../sprites/RobotLaserSprites';
@@ -58,6 +59,7 @@ export class RobotLaser extends Rectangle implements IRenderable, IAnimated {
         this.currentSprite,
         new Vector(this.l + xOffset, this.t)
       );
+      if (Debugger.showEnemiesHitboxes) this.drawColliders('#ffffff');
     }
   }
 

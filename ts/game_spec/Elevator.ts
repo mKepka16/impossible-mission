@@ -9,6 +9,7 @@ import Player from '../game_spec/Player';
 import { Rectangle } from '../collisions/Rectangle';
 import Vector from '../general/Vector';
 import State from '../general/State';
+import Debugger from '../general/Debugger';
 
 class Elevator extends Rectangle implements IRenderable, IGroupMember {
   interactionBox: NoCollisionBox;
@@ -177,8 +178,10 @@ class Elevator extends Rectangle implements IRenderable, IGroupMember {
       BuildingsSprites.SPRITES.elevator,
       new Vector(this.l, this.t)
     );
-    // this.interactionBox.drawBorders();
-    // this.drawColliders('#0022ee');
+    if (Debugger.showLiftsHitboxes) {
+      this.interactionBox.drawBorders();
+      this.drawColliders('#0022ee');
+    }
   }
 }
 

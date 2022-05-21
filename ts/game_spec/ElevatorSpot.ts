@@ -3,6 +3,7 @@ import { IGroupMember } from './IGroupMember';
 import { IRenderable } from '../collisions/IRenderable';
 import State from '../general/State';
 import Vector from '../general/Vector';
+import Debugger from '../general/Debugger';
 
 export class ElevatorSpot implements IRenderable, IGroupMember {
   pos: Vector;
@@ -17,7 +18,7 @@ export class ElevatorSpot implements IRenderable, IGroupMember {
   }
 
   render() {
-    // this.drawSpotBorders();
+    if (Debugger.showLiftsHitboxes) this.drawSpotBorders();
   }
 
   drawSpotBorders(color: string = '#ff0000') {

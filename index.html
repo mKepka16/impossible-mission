@@ -15,7 +15,32 @@
   </head>
   <body>
     <canvas id="root"></canvas>
-    <img src="" alt="" id="sprites" />
+    <div class="options">
+      <h3>Debug</h3>
+      <h4>Hitboxes</h4>
+      <div class="row">
+        <label> <input type="checkbox" id="all-hitboxes" /> All </label>
+        <label> <input type="checkbox" id="player" /> Player </label>
+        <label> <input type="checkbox" id="enemies" /> Enemies </label>
+        <label> <input type="checkbox" id="furniture" /> Furniture </label>
+        <label>
+          <input type="checkbox" id="walls-and-platforms" /> Walls & Platforms
+        </label>
+        <label> <input type="checkbox" id="lifts" /> Lifts </label>
+      </div>
+
+      <h4>Unstack player (only in room view)</h4>
+      <div class="row">
+        <button id="kill-player-button">Kill player</button>
+      </div>
+
+      <h4>Cheats</h4>
+      <div class="row">
+        <button id="random-puzzle">Give random puzzle</button>
+        <button id="snooze">Give snooze</button>
+        <button id="lift-reset">Give lift reset</button>
+      </div>
+    </div>
     <div class="debug-canvas-container"></div>
   </body>
 </html>

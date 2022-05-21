@@ -1,6 +1,7 @@
 import { IRenderable } from '../collisions/IRenderable';
 import { Rectangle } from '../collisions/Rectangle';
 import Assets from '../general/Assets';
+import Debugger from '../general/Debugger';
 import SoundController from '../general/SoundController';
 import Vector from '../general/Vector';
 import RobotSprites from '../sprites/RobotSprites';
@@ -42,6 +43,9 @@ class Ball extends Rectangle implements IRenderable {
       RobotSprites.SPRITES.ball,
       new Vector(this.l, this.t)
     );
+    if (Debugger.showEnemiesHitboxes) {
+      this.drawColliders('#ffffff');
+    }
   }
 }
 
