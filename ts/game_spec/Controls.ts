@@ -76,6 +76,7 @@ class Controls {
       if (this.elevatorBlock) return;
       if (!this.actionBlock) this.setAction('runRight');
       this.right = true;
+      this.left = false;
     }
     if (e.key == 'a' || e.key == 'ArrowLeft') {
       if (this.isCursorMode) {
@@ -85,6 +86,7 @@ class Controls {
       if (this.searchBlock) return;
       if (this.elevatorBlock) return;
       if (!this.actionBlock) this.setAction('runLeft');
+      this.right = false;
       this.left = true;
     }
     if (e.key == 'w' || e.key == 'ArrowUp') {
@@ -102,14 +104,6 @@ class Controls {
       if (!this.actionBlock) this.down = true;
     }
     if (e.key == ' ') {
-      // const elevatorMoving = false;
-      // if (
-      //   this.isCursorMode === false &&
-      //   State.scene === 'Elevator' &&
-      //   elevatorMoving === false
-      // ) {
-      //   this.isCursorMode = true;
-      // }
       if (this.isCursorMode) {
         this.cursor.space = true;
         return;
