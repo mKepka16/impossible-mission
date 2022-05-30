@@ -67,7 +67,13 @@ class Searchable extends NoCollisionBox implements IRenderable {
 
   update(dt: number, g: number = 0, f: number = 0) {
     if (this.isEmpty) return;
-    if (this.isCollidingWithPlayer() && Controls.up) {
+    if (
+      this.isCollidingWithPlayer() &&
+      Controls.up &&
+      (Controls.action === 'standLeft' ||
+        Controls.action === 'standRight' ||
+        Controls.action === 'searching')
+    ) {
       this.searchProgress += dt * 40;
       if (this.searchProgress > 100) {
         this.handleSearchFinished();
