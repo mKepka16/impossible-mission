@@ -11,7 +11,6 @@ class Debugger {
 
   constructor() {
     // hitboxes
-    const canvas = document.querySelector('#root');
     const playerCheckbox = document.querySelector(
       '#player'
     ) as HTMLInputElement;
@@ -56,7 +55,6 @@ class Debugger {
     });
 
     allCheckbox.addEventListener('input', () => {
-      console.log('chaning');
       this.showEnemiesHitboxes = allCheckbox.checked;
       this.showLiftsHitboxes = allCheckbox.checked;
       this.showPlayerHitbox = allCheckbox.checked;

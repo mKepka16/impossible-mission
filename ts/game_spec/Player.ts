@@ -194,8 +194,14 @@ class Player extends Rectangle implements IRenderable {
       else if (Controls.action === 'runLeft') Controls.setAction('fallingLeft');
     } else if (!this.isAnimatingJump && !this.isElevating) {
       Controls.actionBlock = false;
-      if (Controls.action === 'fallingLeft') Controls.setAction('standLeft');
-      if (Controls.action === 'fallingRight') Controls.setAction('standRight');
+      if (Controls.action === 'fallingLeft') {
+        if (Controls.left) Controls.setAction('runLeft');
+        else Controls.setAction('standLeft');
+      }
+      if (Controls.action === 'fallingRight') {
+        if (Controls.right) Controls.setAction('runRight');
+        else Controls.setAction('standRight');
+      }
     }
 
     this.handleAnimations(dt);
