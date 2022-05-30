@@ -16,7 +16,7 @@ const soundFilesNames = [
   'zap5',
 ] as const;
 const soundFileExt = 'ogg';
-const soundFilesDir = '/assets/sounds/';
+const soundFilesDir = './assets/sounds/';
 
 type Sounds = {
   [index in typeof soundFilesNames[number]]?: {
